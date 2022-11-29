@@ -1,0 +1,49 @@
+case 0:
+                
+                    if(isChar(atualChar)){
+                        term += atualChar;
+                        estado = 1;
+                    }
+                    else if(isDigit(atualChar)){
+                        estado = 0;
+                    }
+                    else if(isSpace(atualChar)){
+                        estado = 0;
+                    }
+                    else if(isOperador(atualChar)){
+                        estado = 0;
+                    }
+                    else if(isPontuacao(atualChar) || isEOF(atualChar)){
+                       
+                        term += atualChar;
+                        token = new Token();
+                        token.setType(Token.PONTUACAO);
+                        token.setTeste(term);
+                        token.setLine(line);
+                        token.setColumn(column - term.length());
+                        return token;
+                    }
+                    else{
+                        throw new LexicalException("Caracter nao reconhecido");
+                    }
+                    break;
+
+                case 1:
+                    if(isChar(atualChar)){
+                        estado = 1;
+                        term += atualChar;
+                    }
+                    else if(isSpace(atualChar) || isPontuacao(atualChar) || isEOF(atualChar)){
+                        if(!isEOF(atualChar)){back();}
+
+                        token = new Token();
+                        token.setType(Token.IDENTIFICADOR);
+                        token.setTeste(term);
+                        token.setLine(line);
+                        token.setColumn(column - term.length());
+                        return token;
+                    }
+                    else {
+                        throw new LexicalException("Identificador mal formado");
+                    }
+                    break;
