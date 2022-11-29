@@ -45,6 +45,7 @@ public class Parser {
 
 // S -> SIP | P
 
+//gramática usando LL(1)
 // S -> IE 
 // E -> PIE | Vazio
 // I -> id
